@@ -1,26 +1,47 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Stage, Layer, Rect, Text } from 'react-konva';
+import Konva from 'konva';
 
-const Blanket: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type MyProps = {
+};
+type MyState = {
+  color: string;
+};
+
+class Blanket extends React.Component<MyProps, MyState> {
+  state: MyState = {
+    color: 'green'
+  };
+
+  render() {
+    return (
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          <Text
+            x={window.innerWidth/2 - 85}
+            text="Click the blanket to change color" />
+          <Rect
+            x={window.innerWidth/2 - 75}
+            y={20}
+            width={150}
+            height={150}
+            fill={this.state.color}
+            shadowBlur={5}
+            onClick={this.handleClick}
+          />
+        </Layer>
+      </Stage>
+    );
+  }
+
+  handleClick = () => {
+    this.setState({
+      color: Konva.Util.getRandomColor()
+    });
+  };
+
 }
 
 export default Blanket;
